@@ -1,0 +1,16 @@
+{
+  "name": "api-rest-mongodb",
+  "version": "1.0.0",
+  "description": "REST API using MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "REST",
+    "MONGODB",
+    "API"
+  ],
+  "author": "Chris Brocklesby",
+  "license": "ISC"
+}
