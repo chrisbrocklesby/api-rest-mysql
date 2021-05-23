@@ -1,1 +1,3 @@
-# api-rest-mongodb
+# api-rest-mysql
+
+Rest API with MYSQL Database and validation...
