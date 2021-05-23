@@ -3,6 +3,10 @@ const express = require('express');
 const glob = require('glob');
 
 const app = express();
+
+app.disable('x-powered-by');
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
 glob.sync('./routes/**/*.js').forEach((file) => {
@@ -23,11 +27,17 @@ app.use((request, response, next) => {
 });
 
 app.use((error, request, response, next) => {
+  const codes = {
+    validationError: 400,
+    authError: 401,
+  };
+  const status = codes[error.name] || error.status || 500;
+
   response
-    .status(error.status || 500)
+    .status(status)
     .json({
       error: {
-        status: error.status || 500,
+        status,
         name: error.name || 'error',
         message: error.message || 'error',
       },

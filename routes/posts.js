@@ -1,21 +1,48 @@
+const posts = require('../services/posts');
+
 module.exports = (route) => {
-  route.get('/posts', (request, response) => {
-    response.send('Post Index');
+  route.get('/posts', async (request, response, next) => {
+    try {
+      const data = await posts.index();
+      response.json({ data });
+    } catch (error) {
+      next(error);
+    }
   });
 
-  route.get('/posts/:id', (request, response) => {
-    response.send('Post By Id');
+  route.get('/posts/:id', async (request, response, next) => {
+    try {
+      const data = await posts.find(request.params.id);
+      if (!data) { next(); } else { response.json({ data }); }
+    } catch (error) {
+      next(error);
+    }
   });
 
-  route.post('/posts', (request, response) => {
-    response.send('Post Create');
+  route.post('/posts', async (request, response, next) => {
+    try {
+      const data = await posts.create(request.body);
+      response.json({ data });
+    } catch (error) {
+      next(error);
+    }
   });
 
-  route.patch('/posts', (request, response) => {
-    response.send('Post Update');
+  route.patch('/posts/:id', async (request, response, next) => {
+    try {
+      const data = await posts.update(request.params.id, request.body);
+      if (!data) { next(); } else { response.json({ data }); }
+    } catch (error) {
+      next(error);
+    }
   });
 
-  route.delete('/posts', (request, response) => {
-    response.send('Post Delete');
+  route.delete('/posts/:id', async (request, response, next) => {
+    try {
+      const data = await posts.delete(request.params.id);
+      if (!data) { next(); } else { response.json({ data }); }
+    } catch (error) {
+      next(error);
+    }
   });
 };
